@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stembot_bringup">
+
+    <!-- Colours -->
+    <xacro:include filename="materials.xacro" />
+
+    <!-- Main robot structure -->
+    <xacro:include filename="stembot_core.xacro" />
+
+    <!-- Lidar sensor -->
+    <xacro:include filename="lidar.xacro" />
+
+    <!-- IMU sensor -->
+    <xacro:include filename="imu.xacro" />
+
+    <!-- Ultrasonic sensors -->
+    <xacro:include filename="ultra_f1.xacro" />
+    <xacro:include filename="ultra_f2.xacro" />
+
+</robot>

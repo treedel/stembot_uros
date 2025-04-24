@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stembot_bringup">
+
+    <!-- Constants -->
+    <xacro:property name="ultra_size" value="0.005 0.045 0.02" />
+    <xacro:property name="ultra_pos" value="0.11 0.0435 0.028" />
+    <xacro:property name="ultra_rpy" value="0 0 0" />
+
+    <!-- Model -->
+    <link name="ultra_f1_link">
+    
+        <origin xyz="${ultra_pos}" rpy="${ultra_pos}"/>
+        <visual>
+            <material name="sap" />
+            <geometry>
+                <box size="${ultra_size}" />
+            </geometry>
+        </visual>
+
+    </link>
+    <joint name="ultra_f1_joint" type="fixed">
+
+        <parent link="base_link" />
+        <child link="ultra_f1_link" />
+        <origin xyz="${ultra_pos}" rpy="${ultra_rpy}" />
+
+    </joint>
+
+</robot>

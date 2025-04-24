@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stembot_bringup">
+
+    <!-- Constants -->
+    <xacro:property name="imu_size" value="0.03 0.03 0.002" />
+    <xacro:property name="imu_pos" value="0 0 0.0195" />
+    <xacro:property name="imu_rpy" value="0 0 0" />
+
+    <!-- Model -->
+    <link name="imu_link">
+    
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <visual>
+            <material name="sap" />
+            <geometry>
+                <box size="${imu_size}" />
+            </geometry>
+        </visual>
+
+    </link>
+    <joint name="imu_joint" type="fixed">
+
+        <parent link="base_link" />
+        <child link="imu_link" />
+        <origin xyz="${imu_pos}" rpy="${imu_rpy}" />
+
+    </joint>
+
+    <!-- Plugin -->
+    <gazebo reference="imu_link">
+
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>30</update_rate>
+            <visualize>true</visualize>
+            <topic>imu</topic>
+            <gz_frame_id>imu_link</gz_frame_id>
+        </sensor>
+
+    </gazebo>
+
+</robot>

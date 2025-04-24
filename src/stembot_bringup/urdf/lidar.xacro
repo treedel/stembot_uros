@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="stembot_bringup">
+
+    <!-- Constants -->
+    <xacro:property name="lidar_mass" value="0.03" />
+    <xacro:property name="lidar_radius" value="0.03" />
+    <xacro:property name="lidar_thickness" value="0.015" />
+
+    <xacro:property name="lidar_pos_x" value="0" />
+    <xacro:property name="lidar_pos_y" value="0" />
+    <xacro:property name="lidar_pos_z" value="0.09" />
+
+    <!-- Model -->
+    <link name="lidar_link">
+
+        <visual>
+            <geometry>
+                <cylinder radius="${lidar_radius}" length="${lidar_thickness}" />
+            </geometry>
+            <material name="black" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${lidar_radius}" length="${lidar_thickness}" />
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="${lidar_mass}" />
+            <inertia
+                ixx="${1/12*lidar_mass*(3*(lidar_radius*lidar_radius)+(lidar_thickness*lidar_thickness))}"
+                iyy="${1/12*lidar_mass*(3*(lidar_radius*lidar_radius)+(lidar_thickness*lidar_thickness))}"
+                izz="${1/2*lidar_mass*(lidar_radius*lidar_radius)}"
+                ixy="0.0" iyz="0.0" ixz="0.0" />
+        </inertial>
+
+    </link>
+
+    <joint name="lidar_joint" type="fixed">
+
+        <parent link="base_link" />
+        <child link="lidar_link" />
+        <origin xyz="${lidar_pos_x} ${lidar_pos_y} ${lidar_pos_z}" rpy="0 0 0" />
+
+    </joint>
+
+    <!-- Plugin -->
+
+    <gazebo reference="lidar_link">
+
+        <sensor name="lidar" type="gpu_lidar">
+
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>false</visualize>
+            <update_rate>10</update_rate>
+            <lidar>
+                <scan>
+                    <horizontal>
+                        <samples>360</samples>
+                        <min_angle>-${pi}</min_angle>
+                        <max_angle>${pi}</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.3</min>
+                    <max>12</max>
+                </range>
+            </lidar>
+            <topic>scan</topic>
+            <gz_frame_id>lidar_link</gz_frame_id>
+
+        </sensor>
+
+    </gazebo>
+
+</robot>
