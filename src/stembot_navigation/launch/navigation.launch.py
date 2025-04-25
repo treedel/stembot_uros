@@ -50,10 +50,9 @@ def generate_launch_description():
         description='Location of RViz config file'
     )
 
-    package_nav2_bringup = FindPackageShare(package='nav2_bringup').find('nav2_bringup')
     navigation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(package_nav2_bringup, 'launch', 'bringup_launch.py')
+            os.path.join(package_share, 'launch', 'nav2b_bringup_launch.py')
         ),
         launch_arguments={
             'map': map_path,

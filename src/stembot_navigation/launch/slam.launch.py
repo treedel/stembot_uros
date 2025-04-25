@@ -66,11 +66,9 @@ def generate_launch_description():
         }.items()
     )
 
-    package_nav2_bringup = FindPackageShare(package='nav2_bringup').find('nav2_bringup')
-    
     navigation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(package_nav2_bringup, 'launch', 'navigation_launch.py')
+            os.path.join(package_share, 'launch', 'nav2b_navigation_launch.py')
         ),
         condition=IfCondition(use_nav),
         launch_arguments={

@@ -139,7 +139,7 @@ def generate_launch_description():
     ultra_f1 = Node(
         condition=IfCondition(use_range_sensor),
         package='hcsr04',
-        executable='hcsr04',
+        executable='hcsr04_driver',
         parameters=[{
             'trig': 17,
             'echo': 18,
@@ -154,7 +154,7 @@ def generate_launch_description():
     ultra_f2 = Node(
         condition=IfCondition(use_range_sensor),
         package='hcsr04',
-        executable='hcsr04',
+        executable='hcsr04_driver',
         parameters=[{
             'trig': 23,
             'echo': 24,
@@ -180,14 +180,11 @@ def generate_launch_description():
 
     camera = Node(
         condition=IfCondition(use_camera),
-        package='libbot_bringup',
-        executable='camera_publisher',
+        package='image_tools',
+        executable='cam2image',
         output='screen',
-        parameters=[{
-            'camera_device': camera_device,
-            'use_sim_time': use_sim_time_bool,
-            },
-        ]
+        parameters=[{'camera_device': camera_device}],
+        arguments=['--ros-args', '--log-level', 'warn'],
     )
 
     ld = LaunchDescription()
